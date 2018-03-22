@@ -10,15 +10,18 @@ import movies.popular.vuki.com.popularmovies.models.Movie;
 public interface MainActivityContract {
 
     interface View {
-        void onMovieDetailsClicked();
+        void onMovieDetailsClicked( Movie movie, int position );
 
         void onSortClicked();
 
-        void onMoviesPopulate( List<Movie> movies);
+        void onMoviesPopulate( List<Movie> movies );
     }
 
     interface Presenter {
 
         void populateGrid();
+
+        void openMovieDetails( Movie movie,int position );
+
     }
 }

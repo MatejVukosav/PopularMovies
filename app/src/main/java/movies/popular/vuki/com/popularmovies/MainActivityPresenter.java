@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import movies.popular.vuki.com.popularmovies.models.ApiMovie;
+import movies.popular.vuki.com.popularmovies.models.Movie;
 import movies.popular.vuki.com.popularmovies.network.ApiManager;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,5 +40,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
             }
         } );
 
+    }
+
+    @Override
+    public void openMovieDetails( Movie movie, int position ) {
+        view.onMovieDetailsClicked( movie, position );
     }
 }
