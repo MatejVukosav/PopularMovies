@@ -21,7 +21,7 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     private static final String TAG = MainActivityPresenter.class.getCanonicalName();
     private final MainActivityContract.View view;
 
-    public MainActivityPresenter( MainActivityContract.View view ) {
+    MainActivityPresenter( MainActivityContract.View view ) {
         this.view = view;
     }
 

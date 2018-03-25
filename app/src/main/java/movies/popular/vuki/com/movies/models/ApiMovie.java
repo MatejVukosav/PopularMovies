@@ -12,6 +12,10 @@ public class ApiMovie {
     @Json(name = "results")
     private List<Movie> movies;
 
+    public ApiMovie( List<Movie> movies ) {
+        this.movies = movies;
+    }
+
     public List<Movie> getMovies() {
         return movies;
     }

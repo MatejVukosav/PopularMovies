@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by mvukosav
  */
+@SuppressWarnings("unused")
 public class ImageHelper {
 
     public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";

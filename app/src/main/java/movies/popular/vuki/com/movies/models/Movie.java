@@ -32,7 +32,7 @@ public class Movie implements Parcelable {
     @Json(name = "video")
     private final boolean video;
 
-    protected Movie( Parcel in ) {
+    private Movie( Parcel in ) {
         id = in.readInt();
         originalTitle = in.readString();
         posterThumbnail = in.readString();

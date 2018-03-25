@@ -21,7 +21,7 @@ class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private final List<Movie> data;
     private MainActivityContract.Presenter presenter;
 
-    public MovieAdapter( List<Movie> data, MainActivityContract.Presenter presenter ) {
+    MovieAdapter( List<Movie> data, MainActivityContract.Presenter presenter ) {
         this.data = data;
         this.presenter = presenter;
     }
@@ -58,7 +58,7 @@ class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     static class MovieViewHolder extends RecyclerView.ViewHolder {
         ItemMovieBinding binding;
 
-        public MovieViewHolder( ItemMovieBinding binding ) {
+        MovieViewHolder( ItemMovieBinding binding ) {
             super( binding.getRoot() );
             this.binding = binding;
         }

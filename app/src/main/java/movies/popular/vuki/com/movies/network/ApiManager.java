@@ -49,7 +49,7 @@ public class ApiManager implements ApiManagerInterface {
         return apiManagerService;
     }
 
-    public static Moshi getMoshi() {
+    static Moshi getMoshi() {
         return moshi;
     }
 }
