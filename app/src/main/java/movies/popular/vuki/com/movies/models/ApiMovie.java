@@ -1,4 +1,4 @@
-package movies.popular.vuki.com.popularmovies.models;
+package movies.popular.vuki.com.movies.models;
 
 import com.squareup.moshi.Json;
 
@@ -10,8 +10,7 @@ import java.util.List;
 public class ApiMovie {
 
     @Json(name = "results")
-    private
-    List<Movie> movies;
+    private List<Movie> movies;
 
     public List<Movie> getMovies() {
         return movies;

@@ -1,13 +1,15 @@
-package movies.popular.vuki.com.popularmovies;
+package movies.popular.vuki.com.movies.details;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import movies.popular.vuki.com.popularmovies.databinding.ActivityMovieDetailsBinding;
-import movies.popular.vuki.com.popularmovies.helpers.ImageHelper;
-import movies.popular.vuki.com.popularmovies.models.Movie;
+import movies.popular.vuki.com.movies.helpers.ImageHelper;
+import movies.popular.vuki.com.movies.main.MainActivity;
+import movies.popular.vuki.com.movies.models.Movie;
+import movies.popular.vuki.com.movies.R;
+import movies.popular.vuki.com.movies.databinding.ActivityMovieDetailsBinding;
 
 public class MovieDetails extends AppCompatActivity {
 

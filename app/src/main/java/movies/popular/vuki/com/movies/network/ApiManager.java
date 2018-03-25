@@ -1,8 +1,8 @@
-package movies.popular.vuki.com.popularmovies.network;
+package movies.popular.vuki.com.movies.network;
 
 import com.squareup.moshi.Moshi;
 
-import movies.popular.vuki.com.popularmovies.network.logging.LoggingInterceptor;
+import movies.popular.vuki.com.movies.network.logging.LoggingInterceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
@@ -15,6 +15,7 @@ public class ApiManager implements ApiManagerInterface {
     private static final String BASE_URL = "https://api.themoviedb.org/";
     private static ApiManager apiManagerInstance;
     private static ApiManagerService apiManagerService;
+    private static Moshi moshi;
 
     //singleton
     private ApiManager() {
@@ -29,7 +30,7 @@ public class ApiManager implements ApiManagerInterface {
                     .addInterceptor( new ApiKeyQueryInterceptor() )
                     .build();
 
-            Moshi moshi = new Moshi.Builder()
+            moshi = new Moshi.Builder()
                     .build();
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -48,4 +49,7 @@ public class ApiManager implements ApiManagerInterface {
         return apiManagerService;
     }
 
+    public static Moshi getMoshi() {
+        return moshi;
+    }
 }

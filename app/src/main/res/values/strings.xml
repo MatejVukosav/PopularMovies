@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PopularMovies</string>
+    <string name="app_name">Popular Movies</string>
     <string name="movie_details_overview">Overview:</string>
     <string name="movie_details_date">Date:</string>
     <string name="highest_rated">Highest rated</string>
@@ -7,4 +7,6 @@
     <string name="main_activity_label">Popular Movies App</string>
     <string name="movie_details_backdrop_image">Movie details backdrop image</string>
     <string name="movie_poster_image">Movie poster image</string>
+    <string name="image_representing_movie">Image representing movie</string>
+    <string name="error_api_undefined">Undefined api error</string>
 </resources>

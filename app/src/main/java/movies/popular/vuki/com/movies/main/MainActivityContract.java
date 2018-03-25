@@ -1,8 +1,8 @@
-package movies.popular.vuki.com.popularmovies;
+package movies.popular.vuki.com.movies.main;
 
 import java.util.List;
 
-import movies.popular.vuki.com.popularmovies.models.Movie;
+import movies.popular.vuki.com.movies.models.Movie;
 
 /**
  * Created by mvukosav

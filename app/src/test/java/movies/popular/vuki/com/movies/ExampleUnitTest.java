@@ -1,4 +1,4 @@
-package movies.popular.vuki.com.popularmovies;
+package movies.popular.vuki.com.movies;
 
 import org.junit.Test;
 

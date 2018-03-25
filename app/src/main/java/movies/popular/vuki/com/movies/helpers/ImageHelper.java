@@ -1,4 +1,4 @@
-package movies.popular.vuki.com.popularmovies.helpers;
+package movies.popular.vuki.com.movies.helpers;
 
 import android.widget.ImageView;
 
@@ -20,12 +20,10 @@ public class ImageHelper {
 
     public static void getDrawableFromNetwork( ImageView target, String url ) {
         Picasso picasso = Picasso.get();
-        picasso.setIndicatorsEnabled( true );
+//        picasso.setIndicatorsEnabled( true );
         picasso.load( url )
-//                .resize( 100,160 )
-//                .centerCrop()
-                .placeholder( android.R.drawable.ic_menu_help )
-                .error( android.R.drawable.ic_dialog_alert )
+                .placeholder( android.R.drawable.ic_menu_report_image )
+                .error( android.R.drawable.stat_notify_error )
                 .into( target );
     }
 }

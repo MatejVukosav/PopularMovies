@@ -1,40 +1,36 @@
-package movies.popular.vuki.com.popularmovies.models;
+package movies.popular.vuki.com.movies.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.squareup.moshi.Json;
 
-import movies.popular.vuki.com.popularmovies.helpers.ImageHelper;
+import movies.popular.vuki.com.movies.helpers.ImageHelper;
 
 /**
  * Created by mvukosav
  */
+@SuppressWarnings("unused")
 public class Movie implements Parcelable {
 
     @Json(name = "id")
-    int id;
+    private final int id;
     @Json(name = "title")
-    private
-    String originalTitle;
+    private final String originalTitle;
     @Json(name = "poster_path")
-    private
-    String posterThumbnail;
+    private final String posterThumbnail;
     @Json(name = "overview")
-    private
-    String plotSynopsis;
+    private final String plotSynopsis;
     @Json(name = "vote_average")
-    private
-    String rating;
+    private final String rating;
     @Json(name = "release_date")
-    private
-    String releaseDate;
+    private final String releaseDate;
     @Json(name = "backdrop_path")
-    String backdropImage;
+    private final String backdropImage;
     @Json(name = "adult")
-    boolean adult;
+    private final boolean adult;
     @Json(name = "video")
-    boolean video;
+    private final boolean video;
 
     protected Movie( Parcel in ) {
         id = in.readInt();

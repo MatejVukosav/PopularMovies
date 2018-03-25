@@ -7,13 +7,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackground"
-        >
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/poster"
             android:layout_width="match_parent"
             android:layout_height="320dp"
+            android:contentDescription="@string/image_representing_movie"
             android:foreground="@drawable/scrim"
             android:scaleType="centerCrop"
             android:transitionName="poster"
@@ -24,13 +25,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:transitionName="title"
             android:textColor="@android:color/white"
             android:textSize="20sp"
+            android:transitionName="title"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="Titanic"/>
 
     </android.support.constraint.ConstraintLayout>
-
 
 </layout>

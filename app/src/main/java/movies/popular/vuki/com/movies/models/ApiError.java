@@ -1,4 +1,4 @@
-package movies.popular.vuki.com.popularmovies.models;
+package movies.popular.vuki.com.movies.models;
 
 import com.squareup.moshi.Json;
 
@@ -43,12 +43,13 @@ import com.squareup.moshi.Json;
  * <p>
  * Created by mvukosav
  */
+@SuppressWarnings("unused")
 public class ApiError {
 
     @Json(name = "status_code")
-    int statusCode;
+    private int statusCode;
     @Json(name = "status_message")
-    String statusMessage;
+    private String statusMessage;
 
     public int getStatusCode() {
         return statusCode;

@@ -1,24 +1,24 @@
-package movies.popular.vuki.com.popularmovies;
+package movies.popular.vuki.com.movies.main;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
-import movies.popular.vuki.com.popularmovies.databinding.ItemMovieBinding;
-import movies.popular.vuki.com.popularmovies.helpers.ImageHelper;
-import movies.popular.vuki.com.popularmovies.models.Movie;
+import movies.popular.vuki.com.movies.models.Movie;
+import movies.popular.vuki.com.movies.R;
+import movies.popular.vuki.com.movies.databinding.ItemMovieBinding;
+import movies.popular.vuki.com.movies.helpers.ImageHelper;
 
 /**
  * Created by mvukosav
  */
 class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<Movie> data;
+    private final List<Movie> data;
     private MainActivityContract.Presenter presenter;
 
     public MovieAdapter( List<Movie> data, MainActivityContract.Presenter presenter ) {
@@ -34,12 +34,8 @@ class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
         final MovieViewHolder movieViewHolder = new MovieViewHolder( binding );
 
-        binding.poster.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick( View view ) {
-                presenter.openMovieDetails( data.get( movieViewHolder.getAdapterPosition() ), movieViewHolder.getAdapterPosition() );
-            }
-        } );
+        binding.poster.setOnClickListener( view -> presenter.openMovieDetails( data.get( movieViewHolder.getAdapterPosition() ),
+                movieViewHolder.getAdapterPosition() ) );
 
         return movieViewHolder;
     }
@@ -50,8 +46,8 @@ class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
         holder.binding.title.setText( movie.getOriginalTitle() );
         ImageHelper.getDrawableFromNetwork( holder.binding.poster, movie.getPosterThumbnail() );
 
-        holder.binding.poster.setTransitionName( "poster" + position );
-        holder.binding.title.setTransitionName( "title" + position );
+        holder.binding.poster.setTransitionName( MainActivity.TRANSITION_POSTER_ITEM + position );
+        holder.binding.title.setTransitionName( MainActivity.TRANSITION_TITLE_ITEM + position );
     }
 
     @Override
@@ -68,12 +64,13 @@ class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
         }
     }
 
-    public void setMovies(List<Movie> movies){
+    public void setMovies( List<Movie> movies ) {
         data.clear();
         data.addAll( movies );
         notifyDataSetChanged();
     }
 
+    @SuppressWarnings("unused")
     public void addMovies( List<Movie> movies ) {
         data.addAll( movies );
         notifyDataSetChanged();
