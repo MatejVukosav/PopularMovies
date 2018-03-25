@@ -16,7 +16,7 @@ public interface ApiManagerService {
     @GET(apiVersion + "/movie")
     Call<Movie> getMovieById( @Query("movieId") int movieId );
 
-    @GET(apiVersion + "/movie/top_rated")
-    Call<ApiMovie> getTopRatedMovies();
+    @GET(apiVersion + "/discover/movie")
+    Call<ApiMovie> getTopRatedMovies( @Query("sort_by")String sortBy );
 
 }

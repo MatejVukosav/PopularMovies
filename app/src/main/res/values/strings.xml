@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">PopularMovies</string>
+    <string name="movie_details_overview">Overview:</string>
+    <string name="movie_details_date">Date:</string>
+    <string name="highest_rated">Highest rated</string>
+    <string name="most_popular">Most popular</string>
+    <string name="main_activity_label">Popular Movies App</string>
+    <string name="movie_details_backdrop_image">Movie details backdrop image</string>
+    <string name="movie_poster_image">Movie poster image</string>
 </resources>

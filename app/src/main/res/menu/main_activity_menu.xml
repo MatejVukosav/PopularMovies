@@ -6,11 +6,11 @@
         android:menuCategory="container"/>
     <item
         android:id="@+id/popular"
-        android:title="Popular"
+        android:title="@string/most_popular"
         />
     <item
         android:id="@+id/top_rated"
-        android:title="Top rated"
+        android:title="@string/highest_rated"
         />
 
 </menu>

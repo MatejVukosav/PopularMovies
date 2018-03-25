@@ -23,8 +23,8 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     }
 
     @Override
-    public void populateGrid() {
-        Call<ApiMovie> topRatedMovies = ApiManager.getInstance().getService().getTopRatedMovies();
+    public void populateGrid(String sortBy) {
+        Call<ApiMovie> topRatedMovies = ApiManager.getInstance().getService().getTopRatedMovies( sortBy );
         topRatedMovies.enqueue( new Callback<ApiMovie>() {
             @Override
             public void onResponse( @NonNull Call<ApiMovie> call, @NonNull Response<ApiMovie> response ) {

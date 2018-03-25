@@ -1,6 +1,7 @@
 package movies.popular.vuki.com.popularmovies;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -33,6 +34,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     public static final String TRANSITION_POSTER_POSITION = "transitionPosterPosition";
     public static final String TRANSITION_TITLE_POSITION = "transitionTitlePosition";
 
+    static final String DESC = ".desc";
+    static final String highestRated = "vote_average" + DESC;
+    static final String mostPopular = "popularity" + DESC;
+
+    static final String BUNDLE_MOVIE = "movie" ;
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         getWindow().requestFeature( Window.FEATURE_CONTENT_TRANSITIONS );
@@ -45,14 +52,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         binding = DataBindingUtil.setContentView( this, R.layout.activity_main );
         presenter = new MainActivityPresenter( this );
 
-        movieAdapter = new MovieAdapter( new ArrayList<Movie>(), presenter );
+        movieAdapter = new MovieAdapter( new ArrayList<>(), presenter );
 
-        binding.recyclerView.setLayoutManager( new GridLayoutManager( this, 2 ) );
+        if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ) {
+            binding.recyclerView.setLayoutManager( new GridLayoutManager( this, 4 ) );
+        } else {
+            binding.recyclerView.setLayoutManager( new GridLayoutManager( this, 2 ) );
+        }
         binding.recyclerView.setAdapter( movieAdapter );
         binding.recyclerView.setHasFixedSize( true );
         binding.recyclerView.addItemDecoration( new DividerItemDecoration( this, DividerItemDecoration.VERTICAL ) );
 
-        binding.toolbar.setTitle( "PopularMovies" );
+        binding.toolbar.setTitle( R.string.main_activity_label );
         binding.toolbar.setOverflowIcon( ContextCompat.getDrawable( this, android.R.drawable.ic_menu_sort_by_size ) );
         setSupportActionBar( binding.toolbar );
 
@@ -84,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
                     }
                 } );
 
-        presenter.populateGrid();
+        presenter.populateGrid( mostPopular );
     }
 
     @Override
@@ -98,10 +109,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch ( item.getItemId() ) {
             case R.id.popular:
-                binding.toolbar.setTitle( "Popular" );
+                binding.toolbar.setTitle( getResources().getString( R.string.most_popular ) );
+                presenter.populateGrid( mostPopular );
                 break;
             case R.id.top_rated:
-                binding.toolbar.setTitle( "Top rated" );
+                binding.toolbar.setTitle( getResources().getString( R.string.highest_rated ) );
+                presenter.populateGrid( highestRated );
                 break;
         }
         return true;
@@ -119,9 +132,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         Bundle bundle = new Bundle();
         bundle.putString( TRANSITION_POSTER_POSITION, "poster" + position );
         bundle.putString( TRANSITION_TITLE_POSITION, "title" + position );
-        bundle.putParcelable( "movie", movie );
+        bundle.putParcelable( BUNDLE_MOVIE, movie );
 
-        ItemMovieBinding detailsBinding = DataBindingUtil.bind( binding.recyclerView.getChildAt( position ) );
+        ItemMovieBinding detailsBinding = DataBindingUtil.getBinding( binding.recyclerView.getLayoutManager().findViewByPosition( position ) );
         Pair<View, String> posterPair = Pair.create( detailsBinding.poster, "poster" + position );
         Pair<View, String> titlePair = Pair.create( detailsBinding.title, "title" + position );
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation( this, posterPair, titlePair );
@@ -132,13 +145,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     @Override
-    public void onSortClicked() {
-
-    }
-
-    @Override
     public void onMoviesPopulate( List<Movie> movies ) {
-        movieAdapter.addMovies( movies );
+        movieAdapter.setMovies( movies );
     }
 
 }
