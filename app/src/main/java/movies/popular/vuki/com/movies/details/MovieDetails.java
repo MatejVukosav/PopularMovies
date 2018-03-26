@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import movies.popular.vuki.com.movies.R;
+import movies.popular.vuki.com.movies.databinding.ActivityMovieDetailsBinding;
 import movies.popular.vuki.com.movies.helpers.ImageHelper;
 import movies.popular.vuki.com.movies.main.MainActivity;
 import movies.popular.vuki.com.movies.models.Movie;
-import movies.popular.vuki.com.movies.R;
-import movies.popular.vuki.com.movies.databinding.ActivityMovieDetailsBinding;
 
 public class MovieDetails extends AppCompatActivity {
 
@@ -27,13 +27,14 @@ public class MovieDetails extends AppCompatActivity {
             String transitionTitleName = b.getString( MainActivity.TRANSITION_TITLE_POSITION );
             Movie movie = b.getParcelable( MainActivity.BUNDLE_MOVIE );
             if ( movie != null ) {
-                binding.image.setTransitionName( transitionPosterName );
-                ImageHelper.getDrawableFromNetwork( binding.image, movie.getPosterThumbnail() );
+                binding.movie.image.setTransitionName( transitionPosterName );
+                ImageHelper.getDrawableFromNetwork( binding.movie.image, movie.getPosterThumbnail() );
 
-                binding.title.setTransitionName( transitionTitleName );
-                binding.title.setText( movie.getOriginalTitle() );
-                binding.date.setText( movie.getReleaseDate() );
-                binding.overview.setText( movie.getPlotSynopsis() );
+                binding.movie.title.setTransitionName( transitionTitleName );
+                binding.movie.title.setText( movie.getOriginalTitle() );
+                binding.movie.date.setText( movie.getReleaseDate() );
+                binding.movie.overview.setText( movie.getPlotSynopsis() );
+                binding.movie.rating.setGrade( Float.parseFloat( movie.getRating() ) );
                 ImageHelper.getDrawableFromNetwork( binding.poster, movie.getBackdropImage() );
             }
         }

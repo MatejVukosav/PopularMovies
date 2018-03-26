@@ -11,7 +11,12 @@
     <style name="MovieDetailsTextStyle">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:fontFamily">casual</item>
-
     </style>
+
+    <declare-styleable name="CircleRatingView">
+        <attr name="ratingSize" format="float"/>
+        <attr name="circleRadius" format="float"/>
+    </declare-styleable>
+
 
 </resources>
