@@ -5,6 +5,7 @@ import movies.popular.vuki.com.movies.SortBy;
 import movies.popular.vuki.com.movies.models.ApiMovie;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -18,7 +19,7 @@ public interface ApiManagerService {
     @GET(apiVersion + "/movie")
     Call<Movie> getMovieById( @Query("movieId") int movieId );
 
-    @GET(apiVersion + "/discover/movie " )
+    @GET(apiVersion + "/discover/movie ")
     Call<ApiMovie> discoverMovies( @Query("sort_by") @SortBy String sortBy );
 
     @GET(apiVersion + "/movie/popular")
@@ -26,5 +27,11 @@ public interface ApiManagerService {
 
     @GET(apiVersion + "/movie/top_rated")
     Call<ApiMovie> getTopRatedMovies();
+
+    @GET(apiVersion + "/movie/{id}/videos")
+    Call<ApiMovie> fetchMovieTrailers( @Path("id") int movieId );
+
+    @GET(apiVersion + "/movie/{id}/reviews")
+    Call<ApiMovie> fetchMovieReviews( @Path("id") int movieId );
 
 }
