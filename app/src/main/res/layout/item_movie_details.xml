@@ -30,6 +30,17 @@
             android:layout_margin="16dp"
             app:ratingSize="30"/>
 
+        <Button
+            android:id="@+id/reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/rating"
+            android:background="@android:color/transparent"
+            android:text="Reviews"
+            android:textColor="@android:color/black"
+            android:visibility="invisible"/>
+
 
         <TextView
             android:id="@+id/title"
@@ -84,8 +95,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/date"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date"
+            android:padding="16dp"/>
     </RelativeLayout>
 
 </layout>

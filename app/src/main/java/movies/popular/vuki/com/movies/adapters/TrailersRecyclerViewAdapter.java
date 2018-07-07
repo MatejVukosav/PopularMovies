@@ -1,4 +1,4 @@
-package movies.popular.vuki.com.movies.details;
+package movies.popular.vuki.com.movies.adapters;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

@@ -8,11 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import movies.popular.vuki.com.movies.R;
+import movies.popular.vuki.com.movies.adapters.TrailersRecyclerViewAdapter;
 import movies.popular.vuki.com.movies.databinding.ActivityMovieDetailsBinding;
 import movies.popular.vuki.com.movies.databinding.ItemMovieDetailsBinding;
 import movies.popular.vuki.com.movies.helpers.ImageHelper;
@@ -20,6 +22,7 @@ import movies.popular.vuki.com.movies.main.MainActivity;
 import movies.popular.vuki.com.movies.models.Movie;
 import movies.popular.vuki.com.movies.models.Review;
 import movies.popular.vuki.com.movies.models.Trailer;
+import movies.popular.vuki.com.movies.reviews.ReviewsActivity;
 
 public class MovieDetails extends AppCompatActivity
         implements MovieDetailsContract.View, TrailersRecyclerViewAdapter.OnItemClickListener {
@@ -29,7 +32,7 @@ public class MovieDetails extends AppCompatActivity
     private MovieDetailsContract.Presenter presenter;
     private Movie movie;
     private List<Trailer> trailers = new ArrayList<>();
-    private List<Review> reviews = new ArrayList<>();
+    private ArrayList<Review> reviews = new ArrayList<>();
     private TrailersRecyclerViewAdapter adapter;
 
     @Override
@@ -65,6 +68,14 @@ public class MovieDetails extends AppCompatActivity
 
             presenter.fetchReviews( movie.getId() );
             presenter.fetchTrailers( movie.getId() );
+
+            binding.movie.reviews.setOnClickListener( (View.OnClickListener) v -> {
+                Intent intent = new Intent( this, ReviewsActivity.class );
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList( "list", reviews );
+                intent.putExtras( bundle );
+                startActivity( intent );
+            } );
         }
 
         setSupportActionBar( binding.toolbar );
@@ -114,7 +125,10 @@ public class MovieDetails extends AppCompatActivity
     }
 
     @Override
-    public void onReviewsFetched( List<Review> reviews ) {
+    public void onReviewsFetched( ArrayList<Review> reviews ) {
+        if ( !reviews.isEmpty() ) {
+            binding.movie.reviews.setVisibility( View.VISIBLE );
+        }
         this.reviews = reviews;
     }
 

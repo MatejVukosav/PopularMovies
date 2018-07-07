@@ -2,6 +2,7 @@ package movies.popular.vuki.com.movies.details;
 
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import movies.popular.vuki.com.movies.models.Movie;
@@ -18,7 +19,7 @@ public interface MovieDetailsContract {
 
         void onVideoOpen( String url );
 
-        void onReviewsFetched( List<Review> reviews );
+        void onReviewsFetched( ArrayList<Review> reviews );
 
         void onTrailersFetched( List<Trailer> trailers );
     }

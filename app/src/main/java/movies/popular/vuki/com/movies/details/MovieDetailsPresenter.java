@@ -2,9 +2,12 @@ package movies.popular.vuki.com.movies.details;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+
 import movies.popular.vuki.com.movies.models.ApiReviews;
 import movies.popular.vuki.com.movies.models.ApiTrailers;
 import movies.popular.vuki.com.movies.models.Movie;
+import movies.popular.vuki.com.movies.models.Review;
 import movies.popular.vuki.com.movies.models.Trailer;
 import movies.popular.vuki.com.movies.network.ApiManager;
 import retrofit2.Call;
@@ -39,7 +42,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
             @Override
             public void onResponse( @NonNull Call<ApiReviews> call, @NonNull Response<ApiReviews> response ) {
                 if ( response.body() != null && response.body().getReviews() != null ) {
-                    view.onReviewsFetched( response.body().getReviews() );
+                    view.onReviewsFetched( (ArrayList<Review>) response.body().getReviews() );
                 }
             }
 
