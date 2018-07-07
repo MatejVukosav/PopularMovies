@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * Created by mvukosav
  */
-public class ApiTrailers {
+public class ApiReviews {
     @Json(name = "results")
-    List<Trailer> trailers;
+    List<Review> reviews;
 
-    public List<Trailer> getTrailers() {
-        return trailers;
+    public List<Review> getReviews() {
+        return reviews;
     }
 }

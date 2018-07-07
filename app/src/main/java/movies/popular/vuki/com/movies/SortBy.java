@@ -17,5 +17,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface SortBy {
     String highestRated = "vote_average";
     String mostPopular = "popularity";
+    String favorites = "favorites";
 }
 

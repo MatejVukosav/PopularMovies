@@ -1,5 +1,7 @@
 package movies.popular.vuki.com.movies.network;
 
+import movies.popular.vuki.com.movies.models.ApiReviews;
+import movies.popular.vuki.com.movies.models.ApiTrailers;
 import movies.popular.vuki.com.movies.models.Movie;
 import movies.popular.vuki.com.movies.SortBy;
 import movies.popular.vuki.com.movies.models.ApiMovie;
@@ -29,9 +31,9 @@ public interface ApiManagerService {
     Call<ApiMovie> getTopRatedMovies();
 
     @GET(apiVersion + "/movie/{id}/videos")
-    Call<ApiMovie> fetchMovieTrailers( @Path("id") int movieId );
+    Call<ApiTrailers> fetchMovieTrailers( @Path("id") int movieId );
 
     @GET(apiVersion + "/movie/{id}/reviews")
-    Call<ApiMovie> fetchMovieReviews( @Path("id") int movieId );
+    Call<ApiReviews> fetchMovieReviews( @Path("id") int movieId );
 
 }

@@ -32,6 +32,18 @@ public class Movie implements Parcelable {
     @Json(name = "video")
     private final boolean video;
 
+    public Movie( int id, String originalTitle, String posterThumbnail, String plotSynopsis, String rating, String releaseDate, String backdropImage, boolean adult, boolean video ) {
+        this.id = id;
+        this.originalTitle = originalTitle;
+        this.posterThumbnail = posterThumbnail;
+        this.plotSynopsis = plotSynopsis;
+        this.rating = rating;
+        this.releaseDate = releaseDate;
+        this.backdropImage = backdropImage;
+        this.adult = adult;
+        this.video = video;
+    }
+
     private Movie( Parcel in ) {
         id = in.readInt();
         originalTitle = in.readString();

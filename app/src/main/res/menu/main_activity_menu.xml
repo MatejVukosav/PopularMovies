@@ -12,5 +12,9 @@
         android:id="@+id/top_rated"
         android:title="@string/highest_rated"
         />
+    <item
+        android:id="@+id/favorites"
+        android:title="@string/favorites"
+        />
 
 </menu>

@@ -87,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
                 binding.toolbar.setTitle( getResources().getString( R.string.highest_rated ) );
                 presenter.populateGrid( SortBy.highestRated );
                 break;
+            case R.id.favorites:
+                binding.toolbar.setTitle( getResources().getString( R.string.favorites ) );
+                presenter.populateGrid( SortBy.favorites );
+                break;
         }
         return true;
     }
