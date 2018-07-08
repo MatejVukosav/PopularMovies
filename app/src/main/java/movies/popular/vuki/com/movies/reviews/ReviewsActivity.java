@@ -29,7 +29,7 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsRecycle
         if ( actionBar != null ) {
             actionBar.setDisplayHomeAsUpEnabled( true );
             actionBar.setDisplayShowHomeEnabled( true );
-            actionBar.setTitle( " " );
+            actionBar.setTitle( "Reviews" );
         }
 
         Bundle b = getIntent().getExtras();
