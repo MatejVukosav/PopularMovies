@@ -95,6 +95,7 @@ public class MovieDetailsActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu( Menu menu ) {
         getMenuInflater().inflate( R.menu.menu_movie_details, menu );
         if ( isFavorite ) {
+            //race with database findById. how to update after fetch..?
             MenuItem favoriteItem = menu.findItem( R.id.favorite );
             favoriteItem.setChecked( isFavorite );
             favoriteItem.setIcon( android.R.drawable.btn_star_big_on );

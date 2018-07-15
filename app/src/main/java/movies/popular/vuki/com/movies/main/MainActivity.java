@@ -26,7 +26,6 @@ import movies.popular.vuki.com.movies.SortBy;
 import movies.popular.vuki.com.movies.databinding.ActivityMainBinding;
 import movies.popular.vuki.com.movies.databinding.ItemMovieBinding;
 import movies.popular.vuki.com.movies.details.MovieDetailsActivity;
-import movies.popular.vuki.com.movies.mappers.FavoritesToMovieMapper;
 import movies.popular.vuki.com.movies.models.Movie;
 
 public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
@@ -36,13 +35,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     private MovieAdapter movieAdapter;
     public static final String TRANSITION_POSTER_POSITION = "transitionPosterPosition";
     public static final String TRANSITION_TITLE_POSITION = "transitionTitlePosition";
-
+    private static final String SORT_KEY = "sort";
     public static final String BUNDLE_MOVIE = "movie";
     public static final String TRANSITION_POSTER_ITEM = "poster";
     public static final String TRANSITION_TITLE_ITEM = "title";
 
     private MainActivityViewModel viewModel;
-    private final FavoritesToMovieMapper favoritesMapper = new FavoritesToMovieMapper();
+    @SortBy
+    String sort;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -67,11 +67,25 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         binding.recyclerView.setHasFixedSize( true );
         binding.recyclerView.addItemDecoration( new DividerItemDecoration( this, DividerItemDecoration.VERTICAL ) );
 
-        binding.toolbar.setTitle( R.string.main_activity_label );
         binding.toolbar.setOverflowIcon( ContextCompat.getDrawable( this, android.R.drawable.ic_menu_sort_by_size ) );
         setSupportActionBar( binding.toolbar );
 
-        presenter.populateGrid( SortBy.mostPopular );
+        if ( savedInstanceState != null ) {
+            sort = savedInstanceState.getString( SORT_KEY );
+        } else {
+            sort = SortBy.mostPopular;
+        }
+        populateItems( sort );
+    }
+
+    @Override
+    protected void onRestoreInstanceState( Bundle savedInstanceState ) {
+        super.onRestoreInstanceState( savedInstanceState );
+    }
+
+    protected void onSaveInstanceState( Bundle outState ) {
+        super.onSaveInstanceState( outState );
+        outState.putString( SORT_KEY, this.sort );
     }
 
     @Override
@@ -84,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     public boolean onCreateOptionsMenu( Menu menu ) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate( R.menu.main_activity_menu, menu );
+        setToolbarLabel( sort );
         return true;
     }
 
@@ -91,19 +106,48 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch ( item.getItemId() ) {
             case R.id.popular:
-                binding.toolbar.setTitle( getResources().getString( R.string.most_popular ) );
-                presenter.populateGrid( SortBy.mostPopular );
+                populateItems( SortBy.mostPopular );
                 break;
             case R.id.top_rated:
-                binding.toolbar.setTitle( getResources().getString( R.string.highest_rated ) );
-                presenter.populateGrid( SortBy.highestRated );
+                populateItems( SortBy.highestRated );
                 break;
             case R.id.favorites:
-                binding.toolbar.setTitle( getResources().getString( R.string.favorites ) );
-                presenter.populateGrid( SortBy.favorites );
+                populateItems( SortBy.favorites );
                 break;
         }
         return true;
+    }
+
+    public void populateItems( @SortBy String sortType ) {
+        setToolbarLabel( sort );
+        switch ( sortType ) {
+            case SortBy.mostPopular:
+                sort = SortBy.mostPopular;
+                presenter.populateGrid( SortBy.mostPopular );
+                break;
+            case SortBy.highestRated:
+                sort = SortBy.highestRated;
+                presenter.populateGrid( SortBy.highestRated );
+                break;
+            case SortBy.favorites:
+                sort = SortBy.favorites;
+                presenter.populateGrid( SortBy.favorites );
+                break;
+        }
+    }
+
+    public void setToolbarLabel( @SortBy String sortType ) {
+        switch ( sortType ) {
+            case SortBy.mostPopular:
+                binding.toolbar.setTitle( getResources().getString( R.string.most_popular ) );
+                break;
+            case SortBy.highestRated:
+                binding.toolbar.setTitle( getResources().getString( R.string.highest_rated ) );
+                break;
+            case SortBy.favorites:
+                binding.toolbar.setTitle( getResources().getString( R.string.favorites ) );
+                break;
+        }
     }
 
     @Override

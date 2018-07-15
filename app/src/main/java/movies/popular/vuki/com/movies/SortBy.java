@@ -10,7 +10,8 @@ import java.lang.annotation.RetentionPolicy;
  */
 @StringDef({
         SortBy.highestRated,
-        SortBy.mostPopular
+        SortBy.mostPopular,
+        SortBy.favorites,
 })
 
 @Retention(RetentionPolicy.RUNTIME)
