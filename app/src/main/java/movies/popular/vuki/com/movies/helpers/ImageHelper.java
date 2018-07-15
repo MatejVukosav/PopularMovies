@@ -20,9 +20,10 @@ public class ImageHelper {
     public static final String w780 = "w780";
 
     public static void getDrawableFromNetwork( ImageView target, String url ) {
+        String imageUrl = ImageHelper.IMAGE_BASE_URL + url;
         Picasso picasso = Picasso.get();
 //        picasso.setIndicatorsEnabled( true );
-        picasso.load( url )
+        picasso.load( imageUrl )
                 .placeholder( android.R.drawable.ic_menu_report_image )
                 .error( android.R.drawable.stat_notify_error )
                 .into( target );

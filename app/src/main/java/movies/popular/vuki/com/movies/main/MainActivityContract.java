@@ -13,13 +13,16 @@ public interface MainActivityContract {
         void onMovieDetailsClicked( Movie movie, int position );
 
         void onMoviesPopulate( List<Movie> movies );
+
     }
 
     interface Presenter {
 
-        void populateGrid(String sortBy);
+        void populateGrid( String sortBy );
 
-        void openMovieDetails( Movie movie,int position );
+        void openMovieDetails( Movie movie, int position );
+
+        void clean();
 
     }
 }

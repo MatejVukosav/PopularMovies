@@ -4,6 +4,9 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
+import movies.popular.vuki.com.movies.App;
+import movies.popular.vuki.com.movies.database.repositories.FavoritesRepository;
+import movies.popular.vuki.com.movies.mappers.FavoritesToMovieMapper;
 import movies.popular.vuki.com.movies.models.ApiReviews;
 import movies.popular.vuki.com.movies.models.ApiTrailers;
 import movies.popular.vuki.com.movies.models.Movie;
@@ -17,22 +20,31 @@ import retrofit2.Response;
 /**
  * Created by mvukosav
  */
-public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
+public class MovieDetailsPresenter implements MovieDetailsContract.Presenter, FavoritesRepository.AsyncResponse {
 
     private MovieDetailsContract.View view;
+    private final FavoritesRepository favoritesRepository;
+    private final FavoritesToMovieMapper favoritesMapper;
 
     public MovieDetailsPresenter( MovieDetailsContract.View view ) {
         this.view = view;
+        this.favoritesRepository = new FavoritesRepository( App.getInstance() );
+        this.favoritesMapper = new FavoritesToMovieMapper();
     }
 
     @Override
     public void addToFavorites( Movie movie ) {
+        favoritesRepository.insert( favoritesMapper.mapToDatabase( movie ) );
+    }
 
+    @Override
+    public void isFavorite( int id ) {
+        favoritesRepository.findById( this, id );
     }
 
     @Override
     public void removeFromFavorites( Movie movie ) {
-
+        favoritesRepository.delete( favoritesMapper.mapToDatabase( movie ) );
     }
 
     @Override
@@ -75,5 +87,10 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     public void openVideo( Trailer trailer ) {
         String youtubeBaseUrl = "https://www.youtube.com/watch?v=";
         view.onVideoOpen( youtubeBaseUrl + trailer.getKey() );
+    }
+
+    @Override
+    public void findByIdResult( boolean isFavorite ) {
+        view.onFavoriteListener( isFavorite );
     }
 }

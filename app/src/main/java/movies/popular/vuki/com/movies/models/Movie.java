@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import com.squareup.moshi.Json;
 
-import movies.popular.vuki.com.movies.helpers.ImageHelper;
-
 /**
  * Created by mvukosav
  */
@@ -32,7 +30,15 @@ public class Movie implements Parcelable {
     @Json(name = "video")
     private final boolean video;
 
-    public Movie( int id, String originalTitle, String posterThumbnail, String plotSynopsis, String rating, String releaseDate, String backdropImage, boolean adult, boolean video ) {
+    public Movie( int id,
+                  String originalTitle,
+                  String posterThumbnail,
+                  String plotSynopsis,
+                  String rating,
+                  String releaseDate,
+                  String backdropImage,
+                  boolean adult,
+                  boolean video ) {
         this.id = id;
         this.originalTitle = originalTitle;
         this.posterThumbnail = posterThumbnail;
@@ -73,11 +79,11 @@ public class Movie implements Parcelable {
     }
 
     public String getPosterThumbnail() {
-        return ImageHelper.IMAGE_BASE_URL + ImageHelper.w185 + posterThumbnail;
+        return posterThumbnail;
     }
 
     public String getBackdropImage() {
-        return ImageHelper.IMAGE_BASE_URL + ImageHelper.w500 + backdropImage;
+        return backdropImage;
     }
 
     public String getPlotSynopsis() {

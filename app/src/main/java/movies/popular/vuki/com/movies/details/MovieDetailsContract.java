@@ -22,6 +22,9 @@ public interface MovieDetailsContract {
         void onReviewsFetched( ArrayList<Review> reviews );
 
         void onTrailersFetched( List<Trailer> trailers );
+
+        void onFavoriteListener( boolean isFavorite );
+
     }
 
     interface Presenter {
@@ -34,5 +37,8 @@ public interface MovieDetailsContract {
         void fetchTrailers( int movieId );
 
         void openVideo( Trailer trailer );
+
+        void isFavorite( int id );
+
     }
 }

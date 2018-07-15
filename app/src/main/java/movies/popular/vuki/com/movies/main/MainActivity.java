@@ -1,5 +1,6 @@
 package movies.popular.vuki.com.movies.main;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
@@ -20,12 +21,13 @@ import android.view.Window;
 import java.util.ArrayList;
 import java.util.List;
 
-import movies.popular.vuki.com.movies.models.Movie;
 import movies.popular.vuki.com.movies.R;
 import movies.popular.vuki.com.movies.SortBy;
 import movies.popular.vuki.com.movies.databinding.ActivityMainBinding;
 import movies.popular.vuki.com.movies.databinding.ItemMovieBinding;
-import movies.popular.vuki.com.movies.details.MovieDetails;
+import movies.popular.vuki.com.movies.details.MovieDetailsActivity;
+import movies.popular.vuki.com.movies.mappers.FavoritesToMovieMapper;
+import movies.popular.vuki.com.movies.models.Movie;
 
 public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
 
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     public static final String TRANSITION_POSTER_ITEM = "poster";
     public static final String TRANSITION_TITLE_ITEM = "title";
 
+    private MainActivityViewModel viewModel;
+    private final FavoritesToMovieMapper favoritesMapper = new FavoritesToMovieMapper();
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         getWindow().requestFeature( Window.FEATURE_CONTENT_TRANSITIONS );
@@ -46,10 +51,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         getWindow().setEnterTransition( new Explode() );
         // set an exit transition
         getWindow().setExitTransition( new Explode() );
-
         super.onCreate( savedInstanceState );
         binding = DataBindingUtil.setContentView( this, R.layout.activity_main );
-        presenter = new MainActivityPresenter( this );
+        viewModel = ViewModelProviders.of( this ).get( MainActivityViewModel.class );
+        presenter = new MainActivityPresenter( this, viewModel );
 
         movieAdapter = new MovieAdapter( new ArrayList<>(), presenter );
 
@@ -67,6 +72,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         setSupportActionBar( binding.toolbar );
 
         presenter.populateGrid( SortBy.mostPopular );
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.clean();
+        super.onDestroy();
     }
 
     @Override
@@ -107,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         Pair<View, String> titlePair = Pair.create( detailsBinding.title, TRANSITION_TITLE_ITEM + position );
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation( this, posterPair, titlePair );
 
-        Intent intent = new Intent( MainActivity.this, MovieDetails.class );
+        Intent intent = new Intent( MainActivity.this, MovieDetailsActivity.class );
         intent.putExtras( bundle );
         startActivity( intent, optionsCompat.toBundle() );
     }

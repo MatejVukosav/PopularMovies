@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import movies.popular.vuki.com.movies.models.Movie;
 import movies.popular.vuki.com.movies.R;
 import movies.popular.vuki.com.movies.databinding.ItemMovieBinding;
 import movies.popular.vuki.com.movies.helpers.ImageHelper;
+import movies.popular.vuki.com.movies.models.Movie;
 
 /**
  * Created by mvukosav
@@ -44,7 +44,7 @@ class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     public void onBindViewHolder( @NonNull MovieViewHolder holder, int position ) {
         Movie movie = data.get( position );
         holder.binding.title.setText( movie.getOriginalTitle() );
-        ImageHelper.getDrawableFromNetwork( holder.binding.poster, movie.getPosterThumbnail() );
+        ImageHelper.getDrawableFromNetwork( holder.binding.poster, ImageHelper.w185 + movie.getPosterThumbnail() );
 
         holder.binding.poster.setTransitionName( MainActivity.TRANSITION_POSTER_ITEM + position );
         holder.binding.title.setTransitionName( MainActivity.TRANSITION_TITLE_ITEM + position );
@@ -56,6 +56,7 @@ class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
+
         ItemMovieBinding binding;
 
         MovieViewHolder( ItemMovieBinding binding ) {
@@ -65,6 +66,9 @@ class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     }
 
     public void setMovies( List<Movie> movies ) {
+        if(movies==null){
+            return;
+        }
         data.clear();
         data.addAll( movies );
         notifyDataSetChanged();

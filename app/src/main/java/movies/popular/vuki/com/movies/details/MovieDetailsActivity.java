@@ -15,8 +15,6 @@ import java.util.List;
 
 import movies.popular.vuki.com.movies.R;
 import movies.popular.vuki.com.movies.adapters.TrailersRecyclerViewAdapter;
-import movies.popular.vuki.com.movies.databinding.ActivityMovieDetailsBinding;
-import movies.popular.vuki.com.movies.databinding.ItemMovieDetailsBinding;
 import movies.popular.vuki.com.movies.helpers.ImageHelper;
 import movies.popular.vuki.com.movies.main.MainActivity;
 import movies.popular.vuki.com.movies.models.Movie;
@@ -24,7 +22,10 @@ import movies.popular.vuki.com.movies.models.Review;
 import movies.popular.vuki.com.movies.models.Trailer;
 import movies.popular.vuki.com.movies.reviews.ReviewsActivity;
 
-public class MovieDetails extends AppCompatActivity
+import movies.popular.vuki.com.movies.databinding.ActivityMovieDetailsBinding;
+import movies.popular.vuki.com.movies.databinding.ItemMovieDetailsBinding;
+
+public class MovieDetailsActivity extends AppCompatActivity
         implements MovieDetailsContract.View, TrailersRecyclerViewAdapter.OnItemClickListener {
 
     private ActivityMovieDetailsBinding binding;
@@ -34,6 +35,7 @@ public class MovieDetails extends AppCompatActivity
     private List<Trailer> trailers = new ArrayList<>();
     private ArrayList<Review> reviews = new ArrayList<>();
     private TrailersRecyclerViewAdapter adapter;
+    private boolean isFavorite;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -51,14 +53,14 @@ public class MovieDetails extends AppCompatActivity
                 finishActivity();
             }
             binding.movie.image.setTransitionName( transitionPosterName );
-            ImageHelper.getDrawableFromNetwork( binding.movie.image, movie.getPosterThumbnail() );
+            ImageHelper.getDrawableFromNetwork( binding.movie.image, ImageHelper.w185 + movie.getPosterThumbnail() );
 
             binding.movie.title.setTransitionName( transitionTitleName );
             binding.movie.title.setText( movie.getOriginalTitle() );
             binding.movie.date.setText( movie.getReleaseDate() );
             binding.movie.overview.setText( movie.getPlotSynopsis() );
             binding.movie.rating.setGrade( Float.parseFloat( movie.getRating() ) );
-            ImageHelper.getDrawableFromNetwork( binding.poster, movie.getBackdropImage() );
+            ImageHelper.getDrawableFromNetwork( binding.poster, ImageHelper.w500 + movie.getBackdropImage() );
 
             adapter = new TrailersRecyclerViewAdapter( this, new ArrayList<>(), this );
             ItemMovieDetailsBinding itemMovieDetailsBinding = binding.movie;
@@ -68,8 +70,9 @@ public class MovieDetails extends AppCompatActivity
 
             presenter.fetchReviews( movie.getId() );
             presenter.fetchTrailers( movie.getId() );
+            presenter.isFavorite( movie.getId() );
 
-            binding.movie.reviews.setOnClickListener( (View.OnClickListener) v -> {
+            binding.movie.reviews.setOnClickListener( v -> {
                 Intent intent = new Intent( this, ReviewsActivity.class );
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList( "list", reviews );
@@ -90,8 +93,12 @@ public class MovieDetails extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate( R.menu.menu_movie_details, menu );
+        if ( isFavorite ) {
+            MenuItem favoriteItem = menu.findItem( R.id.favorite );
+            favoriteItem.setChecked( isFavorite );
+            favoriteItem.setIcon( android.R.drawable.btn_star_big_on );
+        }
         return true;
     }
 
@@ -111,9 +118,11 @@ public class MovieDetails extends AppCompatActivity
         if ( item.isChecked() ) {
             item.setIcon( android.R.drawable.btn_star_big_off );
             presenter.removeFromFavorites( movie );
+            isFavorite = false;
         } else {
             item.setIcon( android.R.drawable.btn_star_big_on );
             presenter.addToFavorites( movie );
+            isFavorite = true;
         }
         item.setChecked( !item.isChecked() );
     }
@@ -136,6 +145,11 @@ public class MovieDetails extends AppCompatActivity
     public void onTrailersFetched( List<Trailer> trailers ) {
         this.trailers = trailers;
         adapter.set( trailers );
+    }
+
+    @Override
+    public void onFavoriteListener( boolean isFavorite ) {
+        this.isFavorite = isFavorite;
     }
 
     private void finishActivity() {
